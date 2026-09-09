@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>It's All About Animals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FBF8F3;
+    --ink: #2A211B;
+    --ink-soft: #6B5D51;
+    --primary: #A45C39;
+    --primary-dark: #7C4429;
+    --soft: #FBF1E7;
+    --soft-line: #F0DCC5;
+    --coral: #E8674A;
+    --coral-dark: #C94F34;
+    --gold: #D9A441;
+    --gold-dark: #B3822C;
+    --white: #FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Manrope',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    position:relative;
+  }
+  body::before{
+    content:'';
+    position:fixed; inset:0; z-index:-1;
+    background:
+      linear-gradient(rgba(251,248,243,0.90), rgba(251,244,235,0.94)),
+      url('https://placedog.net/1600/1600?random=91') center/cover fixed;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  p{margin:0;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+  input,textarea,select{font-family:inherit;}
+  a{color:inherit;text-decoration:none;}
+  .hidden{display:none !important;}
+  ::selection{background:var(--soft-line);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  /* ================= AUTH SCREEN ================= */
+  #screen-auth{ min-height:100vh; display:flex; }
+  .auth-art{
+    position:relative;
+    flex:1.1;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:48px 44px;
+    overflow:hidden;
+    min-height:100vh;
+    background:
+      linear-gradient(175deg, rgba(50,32,20,0.72) 0%, rgba(35,22,14,0.86) 100%),
+      url('https://placedog.net/1000/1300?random=41') center/cover no-repeat;
+  }
+  .auth-art .brand{
+    color:var(--white); font-size:15px; font-weight:700; letter-spacing:0.02em;
+    display:flex; align-items:center; gap:8px; position:relative; z-index:3;
+  }
+  .auth-art .brand svg{width:22px;height:22px;flex-shrink:0;}
+  .auth-copy{position:relative;z-index:3;color:var(--white);max-width:430px;}
+  .auth-copy h1{ font-size:clamp(30px,4vw,44px); line-height:1.14; color:var(--white); }
+  .auth-quote{
+    margin-top:22px; min-height:70px;
+  }
+  .auth-quote p.qtext{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500; font-size:18.5px;
+    color:#F7EADC; line-height:1.5; transition:opacity .5s ease;
+  }
+  .auth-quote p.qby{ font-size:12.5px; color:#D8BFA6; margin-top:8px; }
+  .auth-stats{ display:flex; gap:28px; margin-top:26px; position:relative; z-index:3; }
+  .auth-stats div{color:var(--white);}
+  .auth-stats .num{font-family:'Fraunces',serif;font-size:26px;font-weight:600;display:block;}
+  .auth-stats .lbl{font-size:12px;color:#E6D2BE;}
+
+  .paw-field{position:absolute;inset:0;z-index:1;pointer-events:none;}
+  .paw-field span{ position:absolute; font-size:22px; opacity:0; color:#F0DCC0; animation:floatPaw 9s ease-in-out infinite; }
+  @keyframes floatPaw{
+    0%{opacity:0; transform:translateY(0) rotate(-8deg) scale(0.9);}
+    12%{opacity:0.4;} 85%{opacity:0.2;}
+    100%{opacity:0; transform:translateY(-160px) rotate(12deg) scale(1.05);}
+  }
+
+  .auth-form-wrap{ flex:1; display:flex; align-items:center; justify-content:center; padding:40px 32px; }
+  .auth-form{ width:100%; max-width:380px; }
+  .auth-form h2{font-size:27px;margin-bottom:6px;}
+  .auth-form .sub{color:var(--ink-soft);font-size:14.5px;margin-bottom:24px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px;}
+  .field input, .field select{
+    width:100%; padding:12px 14px; border:1.5px solid #E7DFD3; border-radius:10px;
+    font-size:14.5px; background:var(--white); transition:border-color .15s ease;
+  }
+  .field input:focus, .field select:focus{ outline:none; border-color:var(--primary); }
+  .field .hint{font-size:12px;color:var(--ink-soft);margin-top:5px;}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:12.5px 20px; border-radius:10px; font-weight:700; font-size:14.5px;
+    transition:transform .12s ease, box-shadow .12s ease, background .15s ease;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-primary{background:var(--primary); color:var(--white); width:100%;}
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-coral{background:var(--coral); color:var(--white);}
+  .btn-coral:hover{background:var(--coral-dark);}
+  .btn-ghost{background:transparent; color:var(--primary); border:1.5px solid var(--soft-line);}
+  .btn-ghost:hover{background:var(--soft);}
+  .btn-text{color:var(--primary);font-weight:700;font-size:14px;}
+  .err-msg{ background:#FCEBE6;color:var(--coral-dark);font-size:13.5px; padding:10px 12px;border-radius:8px;margin-bottom:14px;display:none; }
+  .switch-line{text-align:center;margin-top:20px;font-size:14px;color:var(--ink-soft);}
+  .or-divider{ display:flex;align-items:center;gap:10px;margin:18px 0;color:var(--ink-soft);font-size:12.5px; }
+  .or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:#EDE6DA;}
+
+  @media (max-width:860px){
+    #screen-auth{flex-direction:column;}
+    .auth-art{min-height:auto;padding:32px 26px 40px;}
+  }
+
+  /* ================= HUMANITY GATE SCREEN ================= */
+  #screen-gate{
+    min-height:100vh; display:flex; align-items:center; justify-content:center; padding:40px 24px;
+    background: linear-gradient(rgba(42,33,27,0.55), rgba(42,33,27,0.72)), url('https://placedog.net/1200/1400?random=52') center/cover;
+  }
+  .gate-wrap{
+    max-width:440px; width:100%; text-align:center; background:rgba(255,252,247,0.96);
+    border-radius:24px; padding:38px 30px; box-shadow:0 24px 50px rgba(0,0,0,0.3);
+    animation:gateIn .5s ease;
+  }
+  @keyframes gateIn{ from{opacity:0; transform:translateY(14px);} to{opacity:1;transform:translateY(0);} }
+  .gate-photo{ width:96px;height:96px;border-radius:50%;object-fit:cover; border:3px solid var(--white); box-shadow:0 8px 18px rgba(0,0,0,0.18); margin-bottom:18px; }
+  .gate-wrap h1{font-size:clamp(21px,4vw,26px);line-height:1.28;margin-bottom:12px;color:var(--ink);}
+  .gate-copy{font-size:14px;color:var(--ink-soft);line-height:1.6;margin-bottom:22px;}
+  .gate-check{
+    display:flex; align-items:flex-start; gap:10px; text-align:left; font-size:13px; color:var(--ink);
+    background:var(--soft); border:1px solid var(--soft-line); border-radius:14px; padding:14px 16px; margin-bottom:20px;
+  }
+  .gate-check input{ margin-top:2px; width:17px;height:17px; accent-color:var(--primary); flex-shrink:0; }
+  #gateContinueBtn[disabled]{opacity:0.45;cursor:not-allowed;}
+
+  /* ================= ROLE SCREEN ================= */
+  #screen-role{
+    min-height:100vh; display:flex; align-items:center; justify-content:center; padding:40px 24px;
+    background: radial-gradient(circle at 15% 20%, var(--soft) 0%, transparent 45%),
+      radial-gradient(circle at 85% 80%, #FCE9DD 0%, transparent 40%), var(--bg);
+  }
+  .role-wrap{max-width:760px;width:100%;text-align:center;}
+  .role-wrap h1{font-size:clamp(26px,4vw,36px);margin-bottom:10px;}
+  .role-wrap p.sub{color:var(--ink-soft);font-size:15.5px;max-width:480px;margin:0 auto 40px;}
+  .role-cards{display:flex;gap:22px;flex-wrap:wrap;justify-content:center;}
+  .role-card{
+    background:var(--white); border:1.5px solid #EFE7DA; border-radius:20px; padding:30px 26px; width:290px;
+    text-align:left; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    box-shadow:0 1px 2px rgba(42,33,27,0.05);
+  }
+  .role-card:hover{ transform:translateY(-5px); border-color:var(--primary); box-shadow:0 14px 28px rgba(42,33,27,0.12); }
+  .role-card .icon-badge{ width:54px;height:54px;border-radius:16px; display:flex;align-items:center;justify-content:center; margin-bottom:18px; }
+  .role-card.ngo .icon-badge{background:var(--soft);}
+  .role-card.lover .icon-badge{background:#FCE4DA;}
+  .role-card h3{font-size:19px;margin-bottom:8px;}
+  .role-card p{font-size:13.8px;color:var(--ink-soft);line-height:1.55;margin-bottom:20px;}
+  .role-card .btn{width:100%;}
+
+  /* ================= APP SHELL ================= */
+  #app{min-height:100vh;display:flex;flex-direction:column;}
+  .topbar{
+    position:sticky;top:0;z-index:20; background:rgba(251,248,243,0.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid #EFE7DA; padding:14px 22px; display:flex;align-items:center;justify-content:space-between;
+  }
+  .topbar .brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;color:var(--primary-dark);}
+  .topbar .brand svg{width:22px;height:22px;}
+  .coin-pill{
+    display:flex;align-items:center;gap:7px; background:#FBF1DD;border:1px solid #F0DDB0;
+    padding:6px 12px 6px 8px;border-radius:999px; font-weight:700;font-size:13.5px;color:var(--gold-dark);
+  }
+  .coin-pill svg{width:19px;height:19px;}
+  .admin-pill{background:var(--ink);color:#F6E9D8;padding:5px 11px;font-size:11px;border-radius:999px;font-weight:700;}
+  .icon-btn.danger{color:var(--coral-dark);border-color:#F3CFC3;}
+  .icon-btn.danger:hover{background:#FCEBE6;}
+
+  main.view-wrap{ flex:1; max-width:640px; width:100%; margin:0 auto; padding:22px 16px 100px; }
+  .view-title{margin-bottom:18px;}
+  .view-title h1{font-size:24px;}
+  .view-title p{color:var(--ink-soft);font-size:13.5px;margin-top:4px;}
+
+  .bottom-nav{
+    position:fixed;bottom:0;left:0;right:0;z-index:20; background:var(--white); border-top:1px solid #EFE7DA;
+    display:flex;justify-content:center; padding:8px 6px calc(8px + env(safe-area-inset-bottom));
+  }
+  .bottom-nav-inner{ display:flex;gap:2px;width:100%;max-width:460px;justify-content:space-between; position:relative; }
+  .nav-btn{
+    display:flex;flex-direction:column;align-items:center;gap:4px; padding:6px 10px;border-radius:12px;
+    color:var(--ink-soft); font-size:10.5px;font-weight:600;flex:1; position:relative;
+    transition:color .15s ease, background .15s ease;
+  }
+  .nav-btn svg{width:21px;height:21px;}
+  .nav-btn.active{color:var(--primary-dark); background:var(--soft);}
+  .nav-dot{ position:absolute; top:2px; right:20%; width:8px;height:8px;border-radius:50%; background:var(--coral); }
+  .fab{
+    position:fixed;right:22px;bottom:82px;z-index:22; width:56px;height:56px;border-radius:18px;
+    background:var(--coral);color:var(--white); display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 22px rgba(232,103,74,0.38); transition:transform .15s ease;
+  }
+  .fab:hover{transform:scale(1.06) rotate(4deg);}
+  .fab svg{width:25px;height:25px;}
+
+  /* ---------- feed / news cards ---------- */
+  .filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
+  .locate-hint{
+    display:flex;align-items:center;gap:8px;background:var(--soft);border:1px solid var(--soft-line);
+    border-radius:12px;padding:10px 14px;font-size:13px;color:var(--primary-dark);margin-bottom:16px;
+  }
+  .locate-hint button{font-weight:700;color:var(--primary);}
+
+  .post-card{ background:var(--white); border:1px solid #EFE7DA; border-radius:18px; overflow:hidden; margin-bottom:20px; box-shadow:0 1px 2px rgba(42,33,27,0.04); }
+  .post-head{ display:flex;align-items:center;gap:10px; padding:13px 15px; }
+  .avatar{
+    width:36px;height:36px;border-radius:50%; display:flex;align-items:center;justify-content:center;
+    background:var(--soft);color:var(--primary-dark);font-weight:700;font-size:14px; flex-shrink:0;
+  }
+  .post-head .who{flex:1;min-width:0;}
+  .post-head .name{font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .post-head .meta{font-size:12px;color:var(--ink-soft);display:flex;gap:6px;align-items:center;}
+  .tag{font-size:10.5px;font-weight:700;padding:2.5px 8px;border-radius:999px;}
+  .tag.ngo{background:var(--soft);color:var(--primary-dark);}
+  .tag.lover{background:#FCE4DA;color:var(--coral-dark);}
+  .tag.status-open{background:#FCEBE6;color:var(--coral-dark);}
+  .tag.status-rescued{background:var(--soft);color:var(--primary-dark);}
+  .tag.dist{background:#EDF3F1;color:#3C6959;}
+
+  .post-photo{ width:100%;aspect-ratio:4/3;object-fit:cover;display:block; background:var(--soft); }
+  .post-body{padding:14px 15px 6px;}
+  .post-body .loc{ display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-soft);margin-bottom:8px; }
+  .post-body .loc svg{width:15px;height:15px;flex-shrink:0;}
+  .post-body .desc{font-size:14.2px;line-height:1.5;}
+  .post-body .desc b{font-weight:700;}
+  .post-actions{display:flex;align-items:center;gap:8px;padding:10px 15px 15px;flex-wrap:wrap;}
+  .icon-btn{
+    display:flex;align-items:center;gap:6px; padding:8px 12px;border-radius:10px;
+    font-size:13px;font-weight:700;color:var(--ink-soft); border:1.5px solid #EFE7DA;
+    transition:all .15s ease;
+  }
+  .icon-btn svg{width:17px;height:17px;}
+  .icon-btn.liked{color:var(--coral-dark);border-color:#F3CFC3;background:#FCEBE6;}
+  .icon-btn.liked svg{fill:var(--coral);}
+  .icon-btn:hover{border-color:var(--primary);}
+  .icon-btn[disabled]{opacity:0.4;cursor:not-allowed;}
+  .help-btn{ margin-left:auto; background:var(--primary);color:var(--white); padding:8px 16px;border-radius:10px;font-weight:700;font-size:13px; }
+  .help-btn:hover{background:var(--primary-dark);}
+  .rescued-note{ margin-left:auto;font-size:12.5px;color:var(--primary-dark);font-weight:700; display:flex;align-items:center;gap:6px; }
+  .rescued-note svg{width:16px;height:16px;}
+
+  /* ---------- new post form ---------- */
+  .form-card{background:var(--white);border:1px solid #EFE7DA;border-radius:18px;padding:22px;}
+  .upload-box{
+    border:2px dashed var(--soft-line); border-radius:16px; padding:26px; text-align:center; color:var(--ink-soft);
+    font-size:13.5px; cursor:pointer; position:relative; overflow:hidden; margin-bottom:18px;
+    transition:border-color .15s ease, background .15s ease; min-height:150px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  }
+  .upload-box:hover{border-color:var(--primary);background:var(--soft);}
+  .upload-box img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .upload-box svg{width:30px;height:30px;color:var(--primary);}
+  .upload-box input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+  .chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px;}
+  .chip{ padding:8px 15px;border-radius:999px;border:1.5px solid #EFE7DA; font-size:13px;font-weight:600;color:var(--ink-soft); transition:all .12s ease; }
+  .chip.active{background:var(--primary);border-color:var(--primary);color:var(--white);}
+
+  /* ---------- profile ---------- */
+  .profile-card{
+    background:linear-gradient(155deg, var(--primary) 0%, var(--primary-dark) 100%);
+    border-radius:20px;color:var(--white);padding:26px 24px;margin-bottom:20px; position:relative;overflow:hidden;
+  }
+  .profile-card .paw-deco{position:absolute;right:-10px;bottom:-16px;opacity:0.16;width:120px;height:120px;}
+  .profile-top{display:flex;align-items:center;gap:14px;position:relative;z-index:2;}
+  .profile-avatar{
+    width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,0.15);
+    display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;
+    border:2px solid rgba(255,255,255,0.35);
+  }
+  .profile-top h2{color:var(--white);font-size:20px;}
+  .profile-top .role-line{font-size:13px;color:#F3DFC9;margin-top:3px;}
+  .profile-top .phone-line{font-size:12px;color:#E8CDAE;margin-top:2px;}
+  .profile-coins{
+    margin-top:20px;display:flex;align-items:center;justify-content:space-between;
+    background:rgba(255,255,255,0.14);border-radius:14px;padding:14px 18px;position:relative;z-index:2;
+  }
+  .profile-coins .amt{font-family:'Fraunces',serif;font-size:30px;font-weight:600;display:flex;align-items:center;gap:8px;}
+  .profile-coins .amt svg{width:26px;height:26px;}
+  .profile-coins .lbl{font-size:12px;color:#F3DFC9;}
+  .leaderboard-link{font-weight:800;font-size:12.5px;background:rgba(255,255,255,0.16);padding:8px 14px;border-radius:999px;}
+  .rank-badge{
+    margin-top:16px; display:flex;align-items:center;gap:12px;
+    background:rgba(255,255,255,0.12); border-radius:14px; padding:12px 16px; position:relative;z-index:2;
+  }
+  .rank-icon{font-size:26px;flex-shrink:0;}
+  .rank-info{flex:1;min-width:0;}
+  .rank-title{font-weight:800;font-size:14px;color:var(--white);margin-bottom:6px;}
+  .rank-progress-track{height:6px;border-radius:999px;background:rgba(255,255,255,0.22);overflow:hidden;}
+  .rank-progress-fill{height:100%;background:var(--gold);border-radius:999px;transition:width .4s ease;}
+  .rank-next{font-size:11px;color:#E8D3B8;margin-top:5px;}
+
+  .lb-row{
+    display:flex;align-items:center;gap:12px; background:var(--white);border:1px solid #EFE7DA;border-radius:16px;
+    padding:12px 15px;margin-bottom:10px;
+  }
+  .lb-row.me{border-color:var(--primary);background:var(--soft);}
+  .lb-rank{
+    width:30px;height:30px;border-radius:50%;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;
+    background:#EFE7DA;color:var(--ink-soft);
+  }
+  .lb-rank.gold{background:#F3D27A;color:#6B4F0E;}
+  .lb-rank.silver{background:#DCE1E6;color:#4B535A;}
+  .lb-rank.bronze{background:#E7B98C;color:#6B3E17;}
+  .lb-who{flex:1;min-width:0;}
+  .lb-name{font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+  .lb-title{font-size:11.5px;color:var(--ink-soft);}
+  .lb-coins{display:flex;align-items:center;gap:5px;font-weight:800;font-size:14px;color:var(--gold-dark);flex-shrink:0;}
+  .lb-coins svg{width:17px;height:17px;}
+  .stat-row{display:flex;gap:12px;margin-bottom:20px;}
+  .stat-box{ flex:1;background:var(--white);border:1px solid #EFE7DA;border-radius:16px; padding:16px;text-align:center; }
+  .stat-box .n{font-family:'Fraunces',serif;font-size:24px;font-weight:600;color:var(--primary-dark);}
+  .stat-box .l{font-size:12px;color:var(--ink-soft);margin-top:3px;}
+  .history-item{ display:flex;align-items:center;gap:10px; padding:12px 0;border-bottom:1px solid #F2EEE3;font-size:13.5px; }
+  .history-item:last-child{border-bottom:none;}
+  .history-item .plus{margin-left:auto;font-weight:700;color:var(--gold-dark);}
+
+  .donation-card{
+    position:relative; overflow:hidden; margin-bottom:20px; padding:22px;
+    border-radius:22px; border:1.5px solid #F0C9A6;
+    background:linear-gradient(150deg, #FFF6EC 0%, #FDE9D8 55%, #FCE0CB 100%);
+    animation:borderGlow 3.2s ease-in-out infinite;
+  }
+  @keyframes borderGlow{
+    0%,100%{ box-shadow:0 0 0 rgba(232,103,74,0.0), 0 4px 18px rgba(164,92,57,0.08); }
+    50%{ box-shadow:0 0 0 6px rgba(232,103,74,0.08), 0 10px 26px rgba(164,92,57,0.16); }
+  }
+  .donate-glow{
+    position:absolute; top:-60px; right:-60px; width:180px;height:180px;border-radius:50%;
+    background:radial-gradient(circle, rgba(232,103,74,0.28) 0%, transparent 70%);
+    animation:glowPulse 3.2s ease-in-out infinite;
+  }
+  @keyframes glowPulse{ 0%,100%{transform:scale(1);opacity:0.7;} 50%{transform:scale(1.25);opacity:1;} }
+  .donate-paws{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0;}
+  .donate-paws span{
+    position:absolute; font-size:16px; opacity:0; bottom:-10px;
+    animation:donatePawFloat 5s ease-in-out infinite;
+  }
+  @keyframes donatePawFloat{
+    0%{opacity:0; transform:translateY(0) rotate(0deg);}
+    15%{opacity:0.5;} 90%{opacity:0.15;}
+    100%{opacity:0; transform:translateY(-140px) rotate(20deg);}
+  }
+  .donate-top{position:relative;z-index:2;}
+  .donate-badge{
+    display:inline-flex;align-items:center;gap:5px; background:var(--coral); color:#fff;
+    font-size:11.5px;font-weight:800; padding:5px 12px;border-radius:999px; margin-bottom:12px;
+    animation:badgeBounce 2.4s ease-in-out infinite;
+  }
+  @keyframes badgeBounce{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-3px);} }
+  .donation-card h3{font-size:18px;margin-bottom:8px;position:relative;z-index:2;}
+  .donation-card .donate-sub{font-size:13px;color:var(--ink-soft);line-height:1.55;margin-bottom:14px;position:relative;z-index:2;}
+  .donate-playmates{
+    position:relative;z-index:2; display:flex;align-items:center;justify-content:center;
+    height:96px;margin-bottom:16px;
+  }
+  .pm{
+    width:88px;height:88px;border-radius:50%;object-fit:cover;
+    border:3px solid var(--white); box-shadow:0 8px 18px rgba(124,68,41,0.22);
+    position:relative;
+  }
+  .pm-dog{ margin-right:-22px; z-index:2; animation:pmBounceLeft 2.6s ease-in-out infinite; }
+  .pm-cat{ margin-left:-22px; z-index:1; animation:pmBounceRight 2.6s ease-in-out infinite; animation-delay:0.3s; }
+  @keyframes pmBounceLeft{ 0%,100%{transform:translateY(0) rotate(-3deg);} 50%{transform:translateY(-8px) rotate(2deg);} }
+  @keyframes pmBounceRight{ 0%,100%{transform:translateY(0) rotate(3deg);} 50%{transform:translateY(-8px) rotate(-2deg);} }
+  .pm-heart{position:absolute;font-size:15px;animation:pmHeartFloat 2.8s ease-in-out infinite;}
+  .pm-heart.h1{top:2px;left:calc(50% - 46px);animation-delay:0s;}
+  .pm-heart.h2{top:-6px;left:calc(50% - 8px);animation-delay:0.5s;}
+  .pm-heart.h3{top:2px;left:calc(50% + 30px);animation-delay:1s;}
+  @keyframes pmHeartFloat{ 0%,100%{transform:translateY(0);opacity:0.7;} 50%{transform:translateY(-9px);opacity:1;} }
+  .donate-cta{position:relative;z-index:2; box-shadow:0 8px 20px rgba(232,103,74,0.32); display:block;}
+  .donate-qr{
+    position:relative;z-index:2; display:block; width:168px;height:168px;margin:4px auto 8px;
+    background:#fff; border-radius:16px; border:1px solid var(--soft-line); padding:8px;
+    box-shadow:0 8px 18px rgba(124,68,41,0.12);
+  }
+  .donate-qr-caption{position:relative;z-index:2;text-align:center;font-size:12.5px;color:var(--ink-soft);margin-bottom:14px;}
+  .donate-preview-note{
+    position:relative;z-index:2; background:#FFF6E8;border:1px solid #F0DDB0;color:#8A6A22;
+    font-size:12.3px;line-height:1.55;padding:10px 13px;border-radius:12px;margin-top:12px;
+  }
+  .donate-manual{ position:relative;z-index:2; display:flex;align-items:center;justify-content:space-between;gap:10px; margin-top:12px;font-size:12.8px;color:var(--ink-soft); flex-wrap:wrap; }
+  .donate-thanks{font-size:12.5px;color:var(--primary-dark);margin-top:10px;display:none;}
+  .donate-thanks.show{display:block;}
+  .quote-strip{
+    background:var(--soft); border:1px solid var(--soft-line); border-radius:16px; padding:16px 18px; margin-bottom:20px;
+  }
+  .quote-strip p.qtext{font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;color:var(--primary-dark);line-height:1.5;}
+  .quote-strip p.qby{font-size:11.5px;color:var(--ink-soft);margin-top:6px;}
+
+  /* ---------- empty state ---------- */
+  .empty-state{text-align:center;padding:40px 20px;color:var(--ink-soft);}
+  .empty-state img{width:120px;height:120px;object-fit:cover;border-radius:50%;margin-bottom:14px;border:3px solid var(--soft);}
+  .empty-state h3{color:var(--ink);font-size:17px;margin-bottom:6px;}
+  .empty-state p{font-size:13.5px;max-width:280px;margin:0 auto;}
+
+  /* ---------- coin toast ---------- */
+  #coin-toast{
+    position:fixed;top:22px;left:50%; background:var(--ink);color:var(--white); padding:13px 22px;border-radius:14px;
+    display:flex;align-items:center;gap:10px; font-weight:700;font-size:14px;z-index:100;
+    box-shadow:0 12px 30px rgba(0,0,0,0.25); opacity:0;pointer-events:none; transform:translate(-50%,-14px) scale(0.94);
+  }
+  #coin-toast.show{ animation:popToast 2.6s ease forwards; }
+  #coin-toast svg{width:22px;height:22px;}
+  @keyframes popToast{
+    0%{opacity:0;transform:translate(-50%,-14px) scale(0.9);}
+    10%{opacity:1;transform:translate(-50%,0) scale(1.05);}
+    18%{transform:translate(-50%,0) scale(1);}
+    85%{opacity:1;}
+    100%{opacity:0;transform:translate(-50%,-8px) scale(0.96);}
+  }
+
+  /* ---------- modal ---------- */
+  .modal-backdrop{ position:fixed;inset:0;background:rgba(42,33,27,0.5); display:flex;align-items:center;justify-content:center;z-index:60;padding:20px; }
+  .modal-box{ background:var(--white);border-radius:20px;padding:30px 26px;max-width:340px;width:100%;text-align:center; }
+  .modal-box svg{width:64px;height:64px;margin-bottom:10px;}
+  .modal-box h3{font-size:19px;margin-bottom:8px;}
+  .modal-box p{font-size:14px;color:var(--ink-soft);margin-bottom:22px;line-height:1.5;}
+
+  /* ---------- chat ---------- */
+  .chat-box{ background:var(--white); border-radius:22px; width:100%;max-width:420px;height:72vh; display:flex;flex-direction:column;overflow:hidden; }
+  .chat-head{ display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid #F0EEE5; }
+  .chat-head .back-btn{font-size:20px;color:var(--ink-soft);padding:4px;}
+  .chat-head .who{flex:1;min-width:0;}
+  .chat-head .name{font-weight:700;font-size:14.5px;}
+  .chat-head .role-tiny{font-size:11.5px;color:var(--ink-soft);}
+  .chat-head .call-link{
+    width:38px;height:38px;border-radius:12px;background:var(--soft);color:var(--primary-dark);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .chat-head .call-link svg{width:18px;height:18px;}
+  .chat-head .call-link[data-disabled="1"]{opacity:0.35;pointer-events:none;}
+  .chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:9px;background:#FCFAF6;}
+  .msg{max-width:75%;padding:9px 13px;border-radius:16px;font-size:13.5px;line-height:1.42;}
+  .msg.me{align-self:flex-end;background:var(--primary);color:#fff;border-bottom-right-radius:4px;}
+  .msg.them{align-self:flex-start;background:var(--soft);color:var(--ink);border-bottom-left-radius:4px;}
+  .msg-time{font-size:10px;opacity:0.7;margin-top:3px;display:block;}
+  .chat-input-row{display:flex;gap:8px;padding:12px;border-top:1px solid #F0EEE5;background:var(--white);}
+  .chat-input-row input{flex:1;padding:10px 14px;border-radius:999px;border:1.5px solid var(--soft-line);font-size:13.5px;}
+  .chat-input-row input:focus{outline:none;border-color:var(--primary);}
+  .chat-input-row button{background:var(--primary);color:white;padding:10px 18px;border-radius:999px;font-weight:700;font-size:13px;}
+
+  .chat-item{ display:flex;align-items:center;gap:12px;background:var(--white);border:1px solid #EFE7DA;border-radius:16px;padding:13px 15px;margin-bottom:12px; }
+  .chat-item .who{flex:1;min-width:0;}
+  .chat-item .name{font-weight:700;font-size:14px;}
+  .chat-item .snippet{font-size:12.5px;color:var(--ink-soft);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .chat-item .time{font-size:11px;color:var(--ink-soft);flex-shrink:0;}
+
+  .spin{ width:16px;height:16px;border-radius:50%; border:2.5px solid rgba(255,255,255,0.4);border-top-color:#fff; animation:spin .7s linear infinite; }
+  @keyframes spin{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ AUTH SCREEN ============================================================ -->
+<div id="screen-auth">
+  <div class="auth-art">
+    <div class="paw-field" id="pawField"></div>
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 14.5c-3.5 0-6.5 2.3-6.5 5A2.5 2.5 0 0 0 8 22c1.2 0 1.8-.6 4-.6s2.8.6 4 .6a2.5 2.5 0 0 0 2.5-2.5c0-2.7-3-5-6.5-5z"/><ellipse cx="5.2" cy="10.5" rx="2.1" ry="2.7"/><ellipse cx="9.2" cy="6.6" rx="2.1" ry="2.7"/><ellipse cx="14.8" cy="6.6" rx="2.1" ry="2.7"/><ellipse cx="18.8" cy="10.5" rx="2.1" ry="2.7"/></svg>
+      It's All About Animals
+    </div>
+    <div class="auth-copy">
+      <h1>Every rescue starts with someone who stops to look.</h1>
+      <div class="auth-quote">
+        <p class="qtext" id="authQuoteText">Loading…</p>
+        <p class="qby" id="authQuoteBy"></p>
+      </div>
+      <div class="auth-stats" id="authStats">
+        <div><span class="num" id="statPosts">0</span><span class="lbl">Animals flagged</span></div>
+        <div><span class="num" id="statRescues">0</span><span class="lbl">Rescues logged</span></div>
+        <div><span class="num" id="statUsers">0</span><span class="lbl">People in the pack</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-form-wrap">
+    <div class="auth-form">
+      <!-- LOGIN -->
+      <div id="loginForm">
+        <h2>Welcome back</h2>
+        <p class="sub">Log in to keep the rescue chain going.</p>
+        <div class="err-msg" id="loginErr"></div>
+        <div class="field">
+          <label>Username or phone number</label>
+          <input type="text" id="loginUsername" autocomplete="username" placeholder="e.g. riya_rescues or 98xxxxxxxx" />
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••" />
+        </div>
+        <button class="btn btn-primary" id="loginBtn" onclick="handleLogin()">Log in</button>
+        <p class="switch-line">New here? <button class="btn-text" onclick="toggleAuth('signup')">Create an account</button></p>
+      </div>
+
+      <!-- SIGNUP -->
+      <div id="signupForm" class="hidden">
+        <h2>Join the pack</h2>
+        <p class="sub">One account, then tell us how you'd like to help.</p>
+        <div class="err-msg" id="signupErr"></div>
+        <div class="field">
+          <label>Full name</label>
+          <input type="text" id="signupName" placeholder="Your name" />
+        </div>
+        <div class="field">
+          <label>Phone number</label>
+          <input type="tel" id="signupPhone" placeholder="e.g. 98xxxxxxxx" />
+          <p class="hint">Used to log in, and so people you help or who help you can call you directly.</p>
+        </div>
+        <div class="field">
+          <label>Username</label>
+          <input type="text" id="signupUsername" placeholder="Pick a unique username" />
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="signupPassword" placeholder="At least 4 characters" />
+        </div>
+        <button class="btn btn-primary" id="signupBtn" onclick="handleSignup()">Continue</button>
+        <p class="switch-line">Already have an account? <button class="btn-text" onclick="toggleAuth('login')">Log in</button></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ HUMANITY GATE SCREEN ============================================================ -->
+<div id="screen-gate" class="hidden">
+  <div class="gate-wrap">
+    <img class="gate-photo" src="https://cataas.com/cat?width=240&height=240" alt="A cat" />
+    <h1>If you are human, show your humanity.</h1>
+    <p class="gate-copy">Every request behind this screen is a real animal, hurt or scared somewhere close by. Come in only if you're here to actually help — not just to look.</p>
+    <label class="gate-check">
+      <input type="checkbox" id="gateCheck" onchange="toggleGateBtn()" />
+      <span>I promise to treat every animal — and every person here trying to help one — with kindness and honesty.</span>
+    </label>
+    <button class="btn btn-primary" id="gateContinueBtn" disabled onclick="proceedFromGate()">Enter It's All About Animals</button>
+  </div>
+</div>
+
+<!-- ============================================================ ROLE SCREEN ============================================================ -->
+<div id="screen-role" class="hidden">
+  <div class="role-wrap">
+    <h1>How will you show up for animals?</h1>
+    <p class="sub">This sets what your account can do — you're always earning PawCoins either way.</p>
+    <div class="role-cards">
+      <div class="role-card lover" onclick="selectRole('lover')">
+        <div class="icon-badge">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C94F34" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10.4-8.8 10.4S3.2 13.6 3.2 8.6a4.6 4.6 0 0 1 8.8-2 4.6 4.6 0 0 1 8.8 2z"/></svg>
+        </div>
+        <h3>Animal lover, rescuing</h3>
+        <p>You spot strays and hurt animals out in the world. Post a photo, describe the injury, drop a location — earn 5 PawCoins per request, and nearby rescuers come to you.</p>
+        <button class="btn btn-coral">I spot animals in need</button>
+      </div>
+      <div class="role-card ngo" onclick="selectRole('ngo')">
+        <div class="icon-badge">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A45C39" stroke-width="1.8"><path d="M12 3l7 3v6c0 4.6-3 8.5-7 9.9C8 20.5 5 16.6 5 12V6z"/><path d="M9.5 12.2l1.8 1.8 3.2-3.6"/></svg>
+        </div>
+        <h3>NGO / rescuer</h3>
+        <p>You respond to help requests near you, do the rescue work, and share the outcome. Mark a case rescued to earn 20 PawCoins and post the recovery story for everyone.</p>
+        <button class="btn btn-primary">I rescue &amp; respond</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ MAIN APP ============================================================ -->
+<div id="app" class="hidden">
+  <div class="topbar">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 14.5c-3.5 0-6.5 2.3-6.5 5A2.5 2.5 0 0 0 8 22c1.2 0 1.8-.6 4-.6s2.8.6 4 .6a2.5 2.5 0 0 0 2.5-2.5c0-2.7-3-5-6.5-5z"/><ellipse cx="5.2" cy="10.5" rx="2.1" ry="2.7"/><ellipse cx="9.2" cy="6.6" rx="2.1" ry="2.7"/><ellipse cx="14.8" cy="6.6" rx="2.1" ry="2.7"/><ellipse cx="18.8" cy="10.5" rx="2.1" ry="2.7"/></svg>
+      It's All About Animals
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span class="tag admin-pill hidden" id="adminPill">🛡 Admin</span>
+      <div class="coin-pill" id="topCoinPill">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" fill="#D9A441" stroke="#B3822C" stroke-width="1"/><path d="M12 7.5c-1.8 0-3 1-3 2.2 0 2.7 4.6 1.7 4.6 4 0 1.2-1.2 2.1-2.9 2.1-1.2 0-2.2-.4-2.7-1.1M12 6.5v1.1M12 16.3v1.1" stroke="#7A5E1E" stroke-width="1.1" stroke-linecap="round"/></svg>
+        <span id="topCoinCount">0</span>
+      </div>
+    </div>
+  </div>
+
+  <main class="view-wrap">
+
+    <!-- FEED VIEW -->
+    <section id="view-feed">
+      <div class="view-title">
+        <h1>Help requests</h1>
+        <p id="feedSubtitle">Animals who need a hand right now.</p>
+      </div>
+      <div id="locateHintWrap"></div>
+      <div id="filterRowWrap"></div>
+      <div id="feedList"></div>
+    </section>
+
+    <!-- NEW HELP REQUEST FORM (lover role) -->
+    <section id="view-newpost" class="hidden">
+      <div class="view-title">
+        <h1>Flag an animal in need</h1>
+        <p>A clear photo and location help nearby rescuers respond faster.</p>
+      </div>
+      <div class="form-card">
+        <label class="upload-box" id="postUploadBox">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="1.7"/><path d="M21 17l-5.5-5.5a2 2 0 0 0-2.8 0L4 20"/><path d="M9 4h6l1 2H8z"/></svg>
+          <span id="postUploadHint">Tap to add a photo of the animal</span>
+          <input type="file" accept="image/*" id="postImageInput" onchange="handlePostImage(event)"/>
+        </label>
+        <div class="field">
+          <label>Which animal?</label>
+          <div class="chip-row" id="speciesChips">
+            <button type="button" class="chip active" data-val="Dog" onclick="selectChip(this,'speciesChips')">Dog</button>
+            <button type="button" class="chip" data-val="Cat" onclick="selectChip(this,'speciesChips')">Cat</button>
+            <button type="button" class="chip" data-val="Puppy" onclick="selectChip(this,'speciesChips')">Puppy</button>
+            <button type="button" class="chip" data-val="Kitten" onclick="selectChip(this,'speciesChips')">Kitten</button>
+            <button type="button" class="chip" data-val="Other" onclick="selectChip(this,'speciesChips')">Other</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>What's wrong / what happened</label>
+          <textarea id="postDesc" rows="3" placeholder="e.g. Limping on the front left leg, looks like a road injury, scared of people"></textarea>
+        </div>
+        <div class="field">
+          <label>Location</label>
+          <input type="text" id="postLocation" placeholder="e.g. Near Sector 5 market, Narela, Delhi" />
+          <p class="hint" id="postGeoStatus">📍 Trying to attach your coordinates so nearby rescuers can find this...</p>
+        </div>
+        <div class="err-msg" id="postErr"></div>
+        <button class="btn btn-coral" style="width:100%;" id="postSubmitBtn" onclick="submitHelpPost()">Post &amp; earn 5 PawCoins</button>
+      </div>
+    </section>
+
+    <!-- NEWS / RESCUE STORIES VIEW -->
+    <section id="view-news" class="hidden">
+      <div class="view-title">
+        <h1>Rescue stories</h1>
+        <p>Good news from the NGOs and rescuers on the ground.</p>
+      </div>
+      <div id="newsList"></div>
+    </section>
+
+    <!-- NEW NEWS FORM (ngo role) -->
+    <section id="view-newnews" class="hidden">
+      <div class="view-title">
+        <h1>Share a rescue story</h1>
+        <p>Tell people what happened after the rescue.</p>
+      </div>
+      <div class="form-card">
+        <label class="upload-box" id="newsUploadBox">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="1.7"/><path d="M21 17l-5.5-5.5a2 2 0 0 0-2.8 0L4 20"/><path d="M9 4h6l1 2H8z"/></svg>
+          <span id="newsUploadHint">Tap to add a photo</span>
+          <input type="file" accept="image/*" id="newsImageInput" onchange="handleNewsImage(event)"/>
+        </label>
+        <div class="field">
+          <label>Title</label>
+          <input type="text" id="newsTitle" placeholder="e.g. Bruno is walking again" />
+        </div>
+        <div class="field">
+          <label>Outcome</label>
+          <div class="chip-row" id="outcomeChips">
+            <button type="button" class="chip active" data-val="Recovering" onclick="selectChip(this,'outcomeChips')">Recovering</button>
+            <button type="button" class="chip" data-val="Recovered" onclick="selectChip(this,'outcomeChips')">Recovered</button>
+            <button type="button" class="chip" data-val="Adopted" onclick="selectChip(this,'outcomeChips')">Adopted</button>
+            <button type="button" class="chip" data-val="Under treatment" onclick="selectChip(this,'outcomeChips')">Under treatment</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>The story</label>
+          <textarea id="newsStory" rows="4" placeholder="What was the condition when you found them, and how are they doing now?"></textarea>
+        </div>
+        <div class="err-msg" id="newsErr"></div>
+        <button class="btn btn-primary" style="width:100%;" id="newsSubmitBtn" onclick="submitNewsPost()">Publish story</button>
+      </div>
+    </section>
+
+    <!-- CHATS LIST VIEW -->
+    <section id="view-chats" class="hidden">
+      <div class="view-title">
+        <h1>Messages</h1>
+        <p>Conversations about the animals you're helping.</p>
+      </div>
+      <div id="chatsList"></div>
+    </section>
+
+    <!-- PROFILE VIEW -->
+    <section id="view-profile" class="hidden">
+      <div class="profile-card">
+        <svg class="paw-deco" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14.5c-3.5 0-6.5 2.3-6.5 5A2.5 2.5 0 0 0 8 22c1.2 0 1.8-.6 4-.6s2.8.6 4 .6a2.5 2.5 0 0 0 2.5-2.5c0-2.7-3-5-6.5-5z"/><ellipse cx="5.2" cy="10.5" rx="2.1" ry="2.7"/><ellipse cx="9.2" cy="6.6" rx="2.1" ry="2.7"/><ellipse cx="14.8" cy="6.6" rx="2.1" ry="2.7"/><ellipse cx="18.8" cy="10.5" rx="2.1" ry="2.7"/></svg>
+        <div class="profile-top">
+          <div class="profile-avatar" id="profileAvatar">?</div>
+          <div>
+            <h2 id="profileName">—</h2>
+            <p class="role-line" id="profileRoleLine">—</p>
+            <p class="phone-line" id="profilePhoneLine">—</p>
+          </div>
+        </div>
+        <div class="rank-badge" id="rankBadge">
+          <span class="rank-icon" id="rankIcon">🐾</span>
+          <div class="rank-info">
+            <div class="rank-title" id="rankTitle">Newcomer Paw</div>
+            <div class="rank-progress-track"><div class="rank-progress-fill" id="rankProgressFill"></div></div>
+            <div class="rank-next" id="rankNext"></div>
+          </div>
+        </div>
+        <div class="profile-coins">
+          <div>
+            <div class="amt">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" fill="#D9A441" stroke="#B3822C" stroke-width="1"/><path d="M12 7.5c-1.8 0-3 1-3 2.2 0 2.7 4.6 1.7 4.6 4 0 1.2-1.2 2.1-2.9 2.1-1.2 0-2.2-.4-2.7-1.1M12 6.5v1.1M12 16.3v1.1" stroke="#7A5E1E" stroke-width="1.1" stroke-linecap="round"/></svg>
+              <span id="profileCoins">0</span>
+            </div>
+            <div class="lbl">PawCoin balance</div>
+          </div>
+          <button class="btn-text leaderboard-link" style="color:#F7EADC;" onclick="switchView('leaderboard')">🏆 Leaderboard</button>
+        </div>
+      </div>
+
+      <div class="quote-strip" id="profileQuoteStrip">
+        <p class="qtext" id="profileQuoteText">—</p>
+        <p class="qby" id="profileQuoteBy"></p>
+      </div>
+
+      <div class="stat-row" id="profileStatRow"></div>
+
+      <div class="donation-card" id="donationCard">
+        <div class="donate-glow"></div>
+        <div class="donate-paws" id="donatePaws"></div>
+        <div class="donate-top">
+          <span class="donate-badge">🚀 Founding supporter</span>
+          <h3>Help us rescue more, faster</h3>
+          <p class="donate-sub">This app is our first startup — built to get hurt strays help quicker. Every rupee covers vet bills, medicines and food for an animal mid-rescue. It's a personal effort, not a registered charity yet, so give only what feels right.</p>
+        </div>
+        <div class="donate-playmates">
+          <img src="https://placedog.net/140/140?random=63" alt="Dog" class="pm pm-dog" />
+          <img src="https://cataas.com/cat?width=140&height=140" alt="Cat" class="pm pm-cat" />
+          <span class="pm-heart h1">💛</span>
+          <span class="pm-heart h2">🐾</span>
+          <span class="pm-heart h3">💛</span>
+        </div>
+        <div class="chip-row" id="donateChips">
+          <button type="button" class="chip active" data-val="50" onclick="selectChip(this,'donateChips');updateDonateAmountUI();">₹50</button>
+          <button type="button" class="chip" data-val="100" onclick="selectChip(this,'donateChips');updateDonateAmountUI();">₹100</button>
+          <button type="button" class="chip" data-val="250" onclick="selectChip(this,'donateChips');updateDonateAmountUI();">₹250</button>
+          <button type="button" class="chip" data-val="500" onclick="selectChip(this,'donateChips');updateDonateAmountUI();">₹500</button>
+        </div>
+        <div class="field" style="margin-top:12px;">
+          <label>Or enter a custom amount (₹)</label>
+          <input type="number" id="donateCustom" min="1" placeholder="Custom amount" oninput="updateDonateAmountUI()" />
+        </div>
+        <img class="donate-qr" id="donateQr" src="" alt="Scan to pay via UPI" />
+        <p class="donate-qr-caption" id="donateQrCaption">Scan with any UPI app (Google Pay, PhonePe, Paytm…)</p>
+        <a class="btn btn-coral donate-cta" style="width:100%;" id="donateLink" href="#" onclick="return onDonateClick(event)" target="_blank" rel="noopener">💛 Open UPI app to pay</a>
+        <p class="donate-preview-note hidden" id="donatePreviewNote">👀 You're viewing this inside the chat preview, which isn't allowed to launch other apps — that's why the button won't visibly do anything here. Open the downloaded file directly in your phone's browser for one-tap pay, or just scan the QR code above with your camera — that works right from here.</p>
+        <div class="donate-manual">
+          <span>QR or button not opening anything?</span>
+          <button class="btn-text" onclick="copyDonateNumber()" id="copyNumBtn">Copy UPI ID 8766295309@fam</button>
+        </div>
+        <p class="donate-thanks" id="donateThanks">Thank you 💛 — paste that UPI ID in your payment app if it didn't open automatically.</p>
+      </div>
+
+      <div class="form-card">
+        <h3 style="font-size:16px;margin-bottom:12px;">Recent activity</h3>
+        <div id="profileHistory"></div>
+      </div>
+      <button class="btn btn-ghost" style="width:100%;margin-top:18px;" onclick="handleLogout()">Log out</button>
+    </section>
+
+    <!-- LEADERBOARD VIEW -->
+    <section id="view-leaderboard" class="hidden">
+      <div class="view-title" style="display:flex;align-items:center;gap:10px;">
+        <button class="back-btn" style="font-size:20px;color:var(--ink-soft);" onclick="switchView('profile')">←</button>
+        <div>
+          <h1>🏆 Leaderboard</h1>
+          <p>Everyone earning PawCoins for showing up for animals.</p>
+        </div>
+      </div>
+      <div id="leaderboardList"></div>
+    </section>
+
+  </main>
+
+  <div class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <button class="nav-btn" data-view="feed" onclick="switchView('feed')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 11.5L12 4l8 7.5"/><path d="M6 10v9a1 1 0 0 0 1 1h4v-5h2v5h4a1 1 0 0 0 1-1v-9"/></svg>
+        Feed
+      </button>
+      <button class="nav-btn" data-view="news" onclick="switchView('news')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11v3a2 2 0 0 0 2 2h1l3 4v-4h9a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2H9L5 3v4H5a2 2 0 0 0-2 2z"/></svg>
+        Stories
+      </button>
+      <button class="nav-btn" data-view="chats" onclick="switchView('chats')" style="position:relative;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 9 9 0 0 1-3.1-.6L4 20l1.3-3.9a8 8 0 0 1-.8-3.6A8.4 8.4 0 0 1 12.9 4a8.3 8.3 0 0 1 8.1 7.5z"/></svg>
+        Chats
+      </button>
+      <button class="nav-btn" data-view="profile" onclick="switchView('profile')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.4-3.8 4.6-6 7.5-6s6.1 2.2 7.5 6"/></svg>
+        Profile
+      </button>
+    </div>
+  </div>
+
+  <button class="fab hidden" id="fabBtn" onclick="fabAction()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
+</div>
+
+<!-- coin toast -->
+<div id="coin-toast">
+  <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" fill="#D9A441" stroke="#B3822C" stroke-width="1"/><path d="M12 7.5c-1.8 0-3 1-3 2.2 0 2.7 4.6 1.7 4.6 4 0 1.2-1.2 2.1-2.9 2.1-1.2 0-2.2-.4-2.7-1.1M12 6.5v1.1M12 16.3v1.1" stroke="#7A5E1E" stroke-width="1.1" stroke-linecap="round"/></svg>
+  <span id="coinToastText">+5 PawCoins</span>
+</div>
+
+<!-- rescue confirmation modal -->
+<div class="modal-backdrop hidden" id="rescueModal">
+  <div class="modal-box">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#A45C39" stroke-width="1.6"><path d="M12 3l7 3v6c0 4.6-3 8.5-7 9.9C8 20.5 5 16.6 5 12V6z"/><path d="M9.5 12.2l1.8 1.8 3.2-3.6"/></svg>
+    <h3>Mark this animal as rescued?</h3>
+    <p>You'll earn 20 PawCoins and this case will be marked resolved for everyone in the feed.</p>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-ghost" style="flex:1;" onclick="closeRescueModal()">Cancel</button>
+      <button class="btn btn-primary" style="flex:1;" id="confirmRescueBtn" onclick="confirmRescue()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- chat modal -->
+<div class="modal-backdrop hidden" id="chatModal">
+  <div class="chat-box">
+    <div class="chat-head">
+      <button class="back-btn" onclick="closeChat()">←</button>
+      <div class="avatar" id="chatAvatar">?</div>
+      <div class="who">
+        <div class="name" id="chatPartnerName">—</div>
+        <div class="role-tiny" id="chatPartnerRole">—</div>
+      </div>
+      <a class="call-link" id="chatCallLink" href="tel:" title="Call">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0-1 1-2 2-2h2l2 5-2 1.5a11 11 0 0 0 5.5 5.5L15 13l5 2v2c0 1-1 2-2 2A16 16 0 0 1 4 5z"/></svg>
+      </a>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sendChatMessage()" />
+      <button onclick="sendChatMessage()">Send</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   STORAGE LAYER — wraps window.storage with an in-memory fallback
+   ============================================================ */
+const memFallback = {};
+async function sGet(key, shared){
+  try{
+    const r = await window.storage.get(key, !!shared);
+    return r ? r.value : null;
+  }catch(e){
+    const k=(shared?'S:':'P:')+key;
+    return memFallback.hasOwnProperty(k) ? memFallback[k] : null;
+  }
+}
+async function sSet(key, value, shared){
+  try{ await window.storage.set(key, value, !!shared); }
+  catch(e){ const k=(shared?'S:':'P:')+key; memFallback[k]=value; }
+}
+
+/* ============================================================
+   QUOTES
+   ============================================================ */
+const QUOTES = [
+  {text:"Until one has loved an animal, a part of one's soul remains unawakened.", by:"Anatole France"},
+  {text:"The greatness of a nation can be judged by the way its animals are treated.", by:"Mahatma Gandhi"},
+  {text:"Animals are such agreeable friends — they ask no questions, they pass no criticisms.", by:"George Eliot"},
+  {text:"A stray's whole world can change because one person decided to stop and look.", by:null},
+  {text:"Kindness is a language even the smallest paw understands.", by:null},
+  {text:"Every animal you help carries a little piece of you with them, always.", by:null},
+  {text:"We cannot do great things — only small things, with great love, and that includes a hungry street dog.", by:"inspired by Mother Teresa"}
+];
+let quoteIdx = 0;
+function paintQuote(textEl, byEl){
+  const q = QUOTES[quoteIdx % QUOTES.length];
+  if(textEl){ textEl.style.opacity = 0; }
+  setTimeout(()=>{
+    if(textEl){ textEl.textContent = '“'+q.text+'”'; textEl.style.opacity = 1; }
+    if(byEl){ byEl.textContent = q.by ? '— '+q.by : ''; }
+  }, textEl ? 260 : 0);
+}
+function startQuoteRotator(){
+  const at = document.getElementById('authQuoteText');
+  const ab = document.getElementById('authQuoteBy');
+  paintQuote(at, ab);
+  setInterval(()=>{
+    quoteIdx++;
+    paintQuote(at, ab);
+  }, 6500);
+}
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let currentUser = null;
+let activeView = 'feed';
+let pendingPostImage = null;
+let pendingNewsImage = null;
+let pendingRescuePostId = null;
+let myCoords = null;          // {lat,lng} once geolocation succeeds
+let feedFilterKm = null;      // null = All, else 10/50
+let currentChatPartner = null; // {username,name,role,phone}
+let usersCache = null;
+
+/* ============================================================
+   INIT
+   ============================================================ */
+(async function init(){
+  spawnPaws();
+  startQuoteRotator();
+  const session = await sGet('session', false);
+  if(session){
+    const sess = JSON.parse(session);
+    const users = await getUsers();
+    if(sess.username && users[sess.username]){
+      currentUser = users[sess.username];
+      showGate();
+      return;
+    }
+  }
+  await renderAuthStats();
+  showScreen('auth');
+})();
+
+function spawnPaws(){
+  const field = document.getElementById('pawField');
+  const count = 9;
+  for(let i=0;i<count;i++){
+    const s = document.createElement('span');
+    s.textContent = '🐾';
+    s.style.left = (5+Math.random()*85)+'%';
+    s.style.bottom = '-30px';
+    s.style.animationDelay = (i*1.1)+'s';
+    s.style.animationDuration = (8+Math.random()*4)+'s';
+    field.appendChild(s);
+  }
+}
+
+function showScreen(name){
+  document.getElementById('screen-auth').classList.toggle('hidden', name!=='auth');
+  document.getElementById('screen-gate').classList.toggle('hidden', name!=='gate');
+  document.getElementById('screen-role').classList.toggle('hidden', name!=='role');
+  document.getElementById('app').classList.toggle('hidden', name!=='app');
+}
+function toggleGateBtn(){
+  document.getElementById('gateContinueBtn').disabled = !document.getElementById('gateCheck').checked;
+}
+function showGate(){
+  const cb = document.getElementById('gateCheck'); if(cb) cb.checked = false;
+  const btn = document.getElementById('gateContinueBtn'); if(btn) btn.disabled = true;
+  showScreen('gate');
+}
+function proceedFromGate(){
+  if(currentUser.role){ enterApp(); } else { showScreen('role'); }
+}
+
+/* ============================================================
+   USERS / POSTS HELPERS
+   ============================================================ */
+async function getUsers(){
+  const raw = await sGet('users', true);
+  usersCache = raw ? JSON.parse(raw) : {};
+  return usersCache;
+}
+async function saveUsers(users){
+  usersCache = users;
+  await sSet('users', JSON.stringify(users), true);
+}
+async function getPostIndex(key){
+  const raw = await sGet(key, true);
+  return raw ? JSON.parse(raw) : [];
+}
+async function getItem(prefix, id){
+  const raw = await sGet(prefix+id, true);
+  return raw ? JSON.parse(raw) : null;
+}
+
+async function renderAuthStats(){
+  try{
+    const users = await getUsers();
+    const helpIdx = await getPostIndex('post_index');
+    let rescued = 0;
+    for(const id of helpIdx){
+      const p = await getItem('post:', id);
+      if(p && p.status==='rescued') rescued++;
+    }
+    document.getElementById('statUsers').textContent = Object.keys(users).length;
+    document.getElementById('statPosts').textContent = helpIdx.length;
+    document.getElementById('statRescues').textContent = rescued;
+  }catch(e){ /* non-critical */ }
+}
+
+/* ============================================================
+   AUTH
+   ============================================================ */
+function toggleAuth(which){
+  document.getElementById('loginForm').classList.toggle('hidden', which!=='login');
+  document.getElementById('signupForm').classList.toggle('hidden', which!=='signup');
+}
+function showErr(id, msg){ const el = document.getElementById(id); el.textContent = msg; el.style.display = 'block'; }
+function hideErr(id){ document.getElementById(id).style.display='none'; }
+function normPhone(p){ return (p||'').replace(/[^0-9]/g,''); }
+
+async function handleSignup(){
+  hideErr('signupErr');
+  const name = document.getElementById('signupName').value.trim();
+  const phone = document.getElementById('signupPhone').value.trim();
+  const username = document.getElementById('signupUsername').value.trim().toLowerCase().replace(/\s+/g,'_');
+  const password = document.getElementById('signupPassword').value;
+
+  if(!name || !phone || !username || !password){ showErr('signupErr','Please fill in every field.'); return; }
+  if(normPhone(phone).length < 7){ showErr('signupErr','Enter a valid phone number.'); return; }
+  if(password.length < 4){ showErr('signupErr','Password should be at least 4 characters.'); return; }
+
+  const btn = document.getElementById('signupBtn');
+  btn.innerHTML = '<span class="spin"></span>'; btn.disabled = true;
+
+  const users = await getUsers();
+  if(users[username]){ showErr('signupErr','That username is taken — try another.'); btn.textContent='Continue'; btn.disabled=false; return; }
+  const phoneTaken = Object.values(users).some(u => normPhone(u.phone) === normPhone(phone));
+  if(phoneTaken){ showErr('signupErr','That phone number is already registered — try logging in.'); btn.textContent='Continue'; btn.disabled=false; return; }
+
+  const newUser = {
+    username, name, phone, password, role:null,
+    coins:0, avatarEmoji:'🐾',
+    stats:{posted:0, rescued:0},
+    coinLog:[],
+    joinedAt: Date.now()
+  };
+  users[username] = newUser;
+  await saveUsers(users);
+  await sSet('session', JSON.stringify({username}), false);
+  currentUser = newUser;
+
+  btn.textContent = 'Continue'; btn.disabled = false;
+  showGate();
+}
+
+async function handleLogin(){
+  hideErr('loginErr');
+  const idRaw = document.getElementById('loginUsername').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  if(!idRaw || !password){ showErr('loginErr','Enter your username/phone and password.'); return; }
+
+  const btn = document.getElementById('loginBtn');
+  btn.innerHTML = '<span class="spin"></span>'; btn.disabled = true;
+
+  const users = await getUsers();
+  const key = idRaw.toLowerCase();
+  let u = users[key];
+  if(!u){
+    u = Object.values(users).find(x => normPhone(x.phone) === normPhone(idRaw) && normPhone(idRaw).length>0);
+  }
+  if(!u || u.password !== password){
+    showErr('loginErr','Those details don\'t match an account.');
+    btn.textContent = 'Log in'; btn.disabled = false;
+    return;
+  }
+  currentUser = u;
+  await sSet('session', JSON.stringify({username:u.username}), false);
+  btn.textContent = 'Log in'; btn.disabled = false;
+  showGate();
+}
+
+async function handleLogout(){
+  await sSet('session', JSON.stringify({}), false);
+  currentUser = null; myCoords = null; feedFilterKm = null;
+  document.getElementById('loginUsername').value='';
+  document.getElementById('loginPassword').value='';
+  await renderAuthStats();
+  toggleAuth('login');
+  showScreen('auth');
+}
+
+async function selectRole(role){
+  currentUser.role = role;
+  const users = await getUsers();
+  users[currentUser.username] = currentUser;
+  await saveUsers(users);
+  enterApp();
+}
+
+/* ============================================================
+   APP SHELL
+   ============================================================ */
+const ADMIN_PHONE = '8766295309';
+function isAdminUser(u){ return !!u && normPhone(u.phone) === ADMIN_PHONE; }
+
+function enterApp(){
+  showScreen('app');
+  updateTopCoinPill();
+  document.getElementById('adminPill').classList.toggle('hidden', !isAdminUser(currentUser));
+  switchView('feed');
+}
+function updateTopCoinPill(){ document.getElementById('topCoinCount').textContent = currentUser.coins; }
+
+function switchView(name){
+  activeView = name;
+  ['feed','newpost','news','newnews','chats','profile','leaderboard'].forEach(v=>{
+    document.getElementById('view-'+v).classList.add('hidden');
+  });
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+
+  const fab = document.getElementById('fabBtn');
+  if(name==='feed'){
+    document.getElementById('view-feed').classList.remove('hidden');
+    document.querySelector('.nav-btn[data-view="feed"]').classList.add('active');
+    fab.classList.toggle('hidden', currentUser.role !== 'lover');
+    renderFeed();
+  } else if(name==='news'){
+    document.getElementById('view-news').classList.remove('hidden');
+    document.querySelector('.nav-btn[data-view="news"]').classList.add('active');
+    fab.classList.toggle('hidden', currentUser.role !== 'ngo');
+    renderNews();
+  } else if(name==='chats'){
+    document.getElementById('view-chats').classList.remove('hidden');
+    document.querySelector('.nav-btn[data-view="chats"]').classList.add('active');
+    fab.classList.add('hidden');
+    renderChatsList();
+  } else if(name==='profile'){
+    document.getElementById('view-profile').classList.remove('hidden');
+    document.querySelector('.nav-btn[data-view="profile"]').classList.add('active');
+    fab.classList.add('hidden');
+    renderProfile();
+  } else if(name==='leaderboard'){
+    document.getElementById('view-leaderboard').classList.remove('hidden');
+    fab.classList.add('hidden');
+    renderLeaderboard();
+  } else if(name==='newpost'){
+    document.getElementById('view-newpost').classList.remove('hidden');
+    fab.classList.add('hidden');
+  } else if(name==='newnews'){
+    document.getElementById('view-newnews').classList.remove('hidden');
+    fab.classList.add('hidden');
+  }
+}
+
+function fabAction(){
+  ['feed','newpost','news','newnews','chats','profile','leaderboard'].forEach(v=>document.getElementById('view-'+v).classList.add('hidden'));
+  document.getElementById('fabBtn').classList.add('hidden');
+  if(currentUser.role === 'lover'){
+    resetPostForm();
+    document.getElementById('view-newpost').classList.remove('hidden');
+    attemptPostGeoTag();
+  } else {
+    resetNewsForm();
+    document.getElementById('view-newnews').classList.remove('hidden');
+  }
+}
+
+function selectChip(el, groupId){
+  document.querySelectorAll('#'+groupId+' .chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+}
+function getActiveChip(groupId){
+  const el = document.querySelector('#'+groupId+' .chip.active');
+  return el ? el.dataset.val : null;
+}
+
+/* ============================================================
+   GEOLOCATION / NEARBY
+   ============================================================ */
+function distKm(lat1, lon1, lat2, lon2){
+  const R = 6371;
+  const dLat = (lat2-lat1) * Math.PI/180;
+  const dLon = (lon2-lon1) * Math.PI/180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+  const c = 2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R*c;
+}
+
+let pendingPostCoords = null;
+function attemptPostGeoTag(){
+  pendingPostCoords = null;
+  const statusEl = document.getElementById('postGeoStatus');
+  if(!navigator.geolocation){ statusEl.textContent = 'Add the location in words below.'; return; }
+  navigator.geolocation.getCurrentPosition(function(pos){
+    pendingPostCoords = {lat:pos.coords.latitude, lng:pos.coords.longitude};
+    statusEl.textContent = '📍 Your coordinates are attached — nearby rescuers will see the distance.';
+  }, function(){
+    statusEl.textContent = 'Couldn\'t get your coordinates — just describe the location in words below.';
+  }, {timeout:8000});
+}
+
+function requestMyLocationForFeed(){
+  if(!navigator.geolocation) return;
+  const wrap = document.getElementById('locateHintWrap');
+  wrap.innerHTML = '<div class="locate-hint"><span class="spin" style="border-top-color:var(--primary-dark);border-color:rgba(164,92,57,0.3);"></span> Finding animals near you…</div>';
+  navigator.geolocation.getCurrentPosition(function(pos){
+    myCoords = {lat:pos.coords.latitude, lng:pos.coords.longitude};
+    renderFeed();
+  }, function(){
+    wrap.innerHTML = '<div class="locate-hint">Location unavailable — showing every request instead.</div>';
+    setTimeout(()=>{ wrap.innerHTML=''; }, 3200);
+  }, {timeout:8000});
+}
+
+function setFeedFilter(km){
+  feedFilterKm = km;
+  renderFeed();
+}
+
+/* ============================================================
+   IMAGE HANDLING
+   ============================================================ */
+function compressImage(file, maxDim, quality){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = e =>{
+      const img = new Image();
+      img.onload = ()=>{
+        let w = img.width, h = img.height;
+        if(w > h && w > maxDim){ h = h*(maxDim/w); w = maxDim; }
+        else if(h > maxDim){ w = w*(maxDim/h); h = maxDim; }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img,0,0,w,h);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+async function handlePostImage(evt){
+  const file = evt.target.files[0]; if(!file) return;
+  const dataUrl = await compressImage(file, 900, 0.72);
+  pendingPostImage = dataUrl;
+  const box = document.getElementById('postUploadBox');
+  document.getElementById('postUploadHint').style.display='none';
+  let img = box.querySelector('img');
+  if(!img){ img = document.createElement('img'); box.appendChild(img); }
+  img.src = dataUrl;
+}
+async function handleNewsImage(evt){
+  const file = evt.target.files[0]; if(!file) return;
+  const dataUrl = await compressImage(file, 900, 0.72);
+  pendingNewsImage = dataUrl;
+  const box = document.getElementById('newsUploadBox');
+  document.getElementById('newsUploadHint').style.display='none';
+  let img = box.querySelector('img');
+  if(!img){ img = document.createElement('img'); box.appendChild(img); }
+  img.src = dataUrl;
+}
+
+function resetPostForm(){
+  pendingPostImage = null; pendingPostCoords = null;
+  document.getElementById('postDesc').value='';
+  document.getElementById('postLocation').value='';
+  document.getElementById('postImageInput').value='';
+  document.getElementById('postUploadHint').style.display='block';
+  document.getElementById('postGeoStatus').textContent = '📍 Trying to attach your coordinates so nearby rescuers can find this...';
+  const img = document.getElementById('postUploadBox').querySelector('img');
+  if(img) img.remove();
+  hideErr('postErr');
+}
+function resetNewsForm(){
+  pendingNewsImage = null;
+  document.getElementById('newsTitle').value='';
+  document.getElementById('newsStory').value='';
+  document.getElementById('newsImageInput').value='';
+  document.getElementById('newsUploadHint').style.display='block';
+  const img = document.getElementById('newsUploadBox').querySelector('img');
+  if(img) img.remove();
+  hideErr('newsErr');
+}
+
+/* ============================================================
+   SUBMIT: HELP REQUEST POST
+   ============================================================ */
+async function submitHelpPost(){
+  hideErr('postErr');
+  const species = getActiveChip('speciesChips') || 'Dog';
+  const desc = document.getElementById('postDesc').value.trim();
+  const loc = document.getElementById('postLocation').value.trim();
+
+  if(!pendingPostImage){ showErr('postErr','Add a photo of the animal first.'); return; }
+  if(!desc){ showErr('postErr','Describe what happened / the injury.'); return; }
+  if(!loc){ showErr('postErr','Add a location so a rescuer can find them.'); return; }
+
+  const btn = document.getElementById('postSubmitBtn');
+  btn.innerHTML = '<span class="spin"></span>'; btn.disabled = true;
+
+  const id = 'p_'+Date.now()+'_'+Math.floor(Math.random()*9999);
+  const post = {
+    id, type:'help',
+    authorUsername: currentUser.username, authorName: currentUser.name,
+    species, description: desc, location: loc,
+    lat: pendingPostCoords ? pendingPostCoords.lat : null,
+    lng: pendingPostCoords ? pendingPostCoords.lng : null,
+    imageDataUrl: pendingPostImage,
+    status:'open', helperUsername:null, helperName:null,
+    likes:[], createdAt: Date.now()
+  };
+  await sSet('post:'+id, JSON.stringify(post), true);
+  const idx = await getPostIndex('post_index');
+  idx.unshift(id);
+  await sSet('post_index', JSON.stringify(idx), true);
+
+  await awardCoins(5, 'Posted a help request');
+
+  btn.textContent = 'Post & earn 5 PawCoins'; btn.disabled = false;
+  resetPostForm();
+  switchView('feed');
+}
+
+/* ============================================================
+   SUBMIT: NEWS / RESCUE STORY
+   ============================================================ */
+async function submitNewsPost(){
+  hideErr('newsErr');
+  const title = document.getElementById('newsTitle').value.trim();
+  const story = document.getElementById('newsStory').value.trim();
+  const outcome = getActiveChip('outcomeChips') || 'Recovering';
+
+  if(!pendingNewsImage){ showErr('newsErr','Add a photo for the story.'); return; }
+  if(!title){ showErr('newsErr','Give the story a short title.'); return; }
+  if(!story){ showErr('newsErr','Write a couple of lines about what happened.'); return; }
+
+  const btn = document.getElementById('newsSubmitBtn');
+  btn.innerHTML = '<span class="spin"></span>'; btn.disabled = true;
+
+  const id = 'n_'+Date.now()+'_'+Math.floor(Math.random()*9999);
+  const news = {
+    id, type:'news',
+    authorUsername: currentUser.username, authorName: currentUser.name,
+    title, story, outcome, imageDataUrl: pendingNewsImage,
+    likes:[], createdAt: Date.now()
+  };
+  await sSet('news:'+id, JSON.stringify(news), true);
+  const idx = await getPostIndex('news_index');
+  idx.unshift(id);
+  await sSet('news_index', JSON.stringify(idx), true);
+
+  btn.textContent = 'Publish story'; btn.disabled = false;
+  resetNewsForm();
+  switchView('news');
+}
+
+/* ============================================================
+   COINS
+   ============================================================ */
+async function awardCoins(amount, reason){
+  currentUser.coins += amount;
+  currentUser.coinLog.unshift({amount, reason, at: Date.now()});
+  currentUser.coinLog = currentUser.coinLog.slice(0,20);
+  if(reason.toLowerCase().includes('help request')) currentUser.stats.posted++;
+  if(reason.toLowerCase().includes('rescu')) currentUser.stats.rescued++;
+
+  const users = await getUsers();
+  users[currentUser.username] = currentUser;
+  await saveUsers(users);
+
+  updateTopCoinPill();
+  showCoinToast(amount, reason);
+}
+function showCoinToast(amount, reason){
+  const toast = document.getElementById('coin-toast');
+  document.getElementById('coinToastText').textContent = '+'+amount+' PawCoins — '+reason;
+  toast.classList.remove('show'); void toast.offsetWidth; toast.classList.add('show');
+}
+
+/* ============================================================
+   FEED RENDERING
+   ============================================================ */
+function timeAgo(ts){
+  const s = Math.floor((Date.now()-ts)/1000);
+  if(s<60) return 'just now';
+  const m = Math.floor(s/60); if(m<60) return m+'m ago';
+  const h = Math.floor(m/60); if(h<24) return h+'h ago';
+  const d = Math.floor(h/24); return d+'d ago';
+}
+function initials(name){ return (name||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase(); }
+function speciesEmoji(sp){ return {Dog:'🐶',Cat:'🐱',Puppy:'🐕',Kitten:'🐈'}[sp] || '🐾'; }
+function escapeHTML(str){ const d = document.createElement('div'); d.textContent = str==null? '' : str; return d.innerHTML; }
+
+async function renderFeed(){
+  const users = await getUsers();
+  const wrap = document.getElementById('locateHintWrap');
+  const filterWrap = document.getElementById('filterRowWrap');
+
+  if(!myCoords){
+    wrap.innerHTML = '<div class="locate-hint">📍 <button onclick="requestMyLocationForFeed()">Show distance to animals near me</button></div>';
+    filterWrap.innerHTML = '';
+  } else {
+    wrap.innerHTML = '';
+    filterWrap.innerHTML = '<div class="filter-row">'+
+      chipBtn('All', feedFilterKm===null, 'setFeedFilter(null)')+
+      chipBtn('Within 10 km', feedFilterKm===10, 'setFeedFilter(10)')+
+      chipBtn('Within 50 km', feedFilterKm===50, 'setFeedFilter(50)')+
+    '</div>';
+  }
+
+  const list = document.getElementById('feedList');
+  list.innerHTML = '<div class="empty-state"><p>Loading requests…</p></div>';
+  const idx = await getPostIndex('post_index');
+  if(idx.length === 0){
+    list.innerHTML = emptyStateHTML('https://placedog.net/300/300?random=7','No help requests yet','When someone flags an animal in need, it will show up here for rescuers to see.');
+    return;
+  }
+  let posts = (await Promise.all(idx.map(id=>getItem('post:', id)))).filter(Boolean);
+  // Once an animal is rescued, it moves out of the live feed and over to Stories.
+  posts = posts.filter(p => p.status === 'open');
+
+  posts = posts.map(p=>{
+    let dist = null;
+    if(myCoords && p.lat!=null && p.lng!=null){ dist = distKm(myCoords.lat, myCoords.lng, p.lat, p.lng); }
+    return Object.assign({}, p, {_dist: dist});
+  });
+
+  if(myCoords && feedFilterKm){
+    posts = posts.filter(p => p._dist!=null && p._dist <= feedFilterKm);
+  }
+  if(myCoords){
+    posts.sort((a,b)=>{
+      if(a._dist==null && b._dist==null) return b.createdAt - a.createdAt;
+      if(a._dist==null) return 1;
+      if(b._dist==null) return -1;
+      return a._dist - b._dist;
+    });
+  }
+
+  if(posts.length === 0){
+    list.innerHTML = emptyStateHTML('https://placedog.net/300/300?random=8','All clear right now','Every request nearby has already been rescued — check the Stories tab, or widen your distance filter.');
+    return;
+  }
+  list.innerHTML = posts.map(p=>postCardHTML(p, users)).join('');
+}
+
+function chipBtn(label, active, onclick){
+  return '<button type="button" class="chip'+(active?' active':'')+'" onclick="'+onclick+'">'+label+'</button>';
+}
+function emptyStateHTML(imgUrl, title, sub){
+  return '<div class="empty-state"><img src="'+imgUrl+'" alt="" /><h3>'+title+'</h3><p>'+sub+'</p></div>';
+}
+
+function contactButtonsHTML(post, users){
+  if(post.authorUsername === currentUser.username) return '';
+  const authorUser = users[post.authorUsername];
+  const phone = authorUser ? authorUser.phone : null;
+  const callAttr = phone ? 'href="tel:'+escapeHTML(phone)+'"' : 'href="javascript:void(0)" onclick="return false;" style="opacity:0.4;cursor:not-allowed;"';
+  return ''+
+    '<button class="icon-btn" onclick=\'openChat('+JSON.stringify(post.authorUsername)+','+JSON.stringify(post.authorName)+','+JSON.stringify(authorUser?authorUser.role:null)+','+JSON.stringify(phone||null)+')\'>'+
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 9 9 0 0 1-3.1-.6L4 20l1.3-3.9a8 8 0 0 1-.8-3.6A8.4 8.4 0 0 1 12.9 4a8.3 8.3 0 0 1 8.1 7.5z"/></svg>Chat'+
+    '</button>'+
+    '<a class="icon-btn" '+callAttr+'>'+
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5c0-1 1-2 2-2h2l2 5-2 1.5a11 11 0 0 0 5.5 5.5L15 13l5 2v2c0 1-1 2-2 2A16 16 0 0 1 4 5z"/></svg>Call'+
+    '</a>';
+}
+
+function deleteBtnHTML(kind, id){
+  if(!isAdminUser(currentUser)) return '';
+  return '<button class="icon-btn danger" title="Admin: delete" onclick="'+(kind==='post'?'deletePost':'deleteNews')+'(\''+id+'\')">'+
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13"/></svg>'+
+  '</button>';
+}
+
+function postCardHTML(p, users){
+  const liked = p.likes.includes(currentUser.username);
+  const isNgo = currentUser.role === 'ngo';
+  const statusHTML = isNgo
+    ? '<button class="help-btn" onclick="openRescueModal(\''+p.id+'\')">I\'ll help — mark rescued</button>'
+    : '<span class="tag status-open">Waiting for a rescuer</span>';
+  const distTag = (p._dist!=null) ? '<span class="tag dist">'+p._dist.toFixed(1)+' km away</span>' : '';
+
+  return '<div class="post-card">'+
+    '<div class="post-head">'+
+      '<div class="avatar">'+initials(p.authorName)+'</div>'+
+      '<div class="who">'+
+        '<div class="name">'+escapeHTML(p.authorName)+' <span class="tag lover">Animal lover</span></div>'+
+        '<div class="meta">'+timeAgo(p.createdAt)+(distTag?(' · '+distTag):'')+'</div>'+
+      '</div>'+
+      '<span class="tag status-open">Open</span>'+
+    '</div>'+
+    '<img class="post-photo" src="'+p.imageDataUrl+'" alt="'+escapeHTML(p.species)+' needing help" />'+
+    '<div class="post-body">'+
+      '<div class="loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.6 7-11.5A7 7 0 0 0 5 9.5C5 14.4 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg>'+escapeHTML(p.location)+'</div>'+
+      '<div class="desc">'+speciesEmoji(p.species)+' <b>'+escapeHTML(p.species)+'</b> — '+escapeHTML(p.description)+'</div>'+
+    '</div>'+
+    '<div class="post-actions">'+
+      '<button class="icon-btn '+(liked?'liked':'')+'" onclick="toggleLike(\''+p.id+'\',\'post:\')">'+
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10.4-8.8 10.4S3.2 13.6 3.2 8.6a4.6 4.6 0 0 1 8.8-2 4.6 4.6 0 0 1 8.8 2z"/></svg>'+
+        p.likes.length+
+      '</button>'+
+      contactButtonsHTML(p, users)+
+      statusHTML+
+      deleteBtnHTML('post', p.id)+
+    '</div>'+
+  '</div>';
+}
+
+async function toggleLike(id, prefix){
+  const item = await getItem(prefix, id);
+  if(!item) return;
+  const i = item.likes.indexOf(currentUser.username);
+  if(i>=0) item.likes.splice(i,1); else item.likes.push(currentUser.username);
+  await sSet(prefix+id, JSON.stringify(item), true);
+  if(activeView==='news') renderNews(); else renderFeed();
+}
+
+async function deletePost(id){
+  if(!confirm('Delete this help request for everyone? This can\'t be undone.')) return;
+  let idx = await getPostIndex('post_index');
+  idx = idx.filter(x=>x!==id);
+  await sSet('post_index', JSON.stringify(idx), true);
+  renderFeed(); renderNews();
+}
+async function deleteNews(id){
+  if(!confirm('Delete this story for everyone? This can\'t be undone.')) return;
+  let idx = await getPostIndex('news_index');
+  idx = idx.filter(x=>x!==id);
+  await sSet('news_index', JSON.stringify(idx), true);
+  renderNews();
+}
+
+/* ---------- rescue modal flow ---------- */
+function openRescueModal(postId){ pendingRescuePostId = postId; document.getElementById('rescueModal').classList.remove('hidden'); }
+function closeRescueModal(){ pendingRescuePostId = null; document.getElementById('rescueModal').classList.add('hidden'); }
+async function confirmRescue(){
+  if(!pendingRescuePostId) return;
+  const btn = document.getElementById('confirmRescueBtn');
+  btn.innerHTML = '<span class="spin"></span>'; btn.disabled = true;
+
+  const post = await getItem('post:', pendingRescuePostId);
+  if(post && post.status === 'open'){
+    post.status = 'rescued';
+    post.helperUsername = currentUser.username;
+    post.helperName = currentUser.name;
+    post.rescuedAt = Date.now();
+    await sSet('post:'+post.id, JSON.stringify(post), true);
+    await awardCoins(20, 'Rescued an animal');
+  }
+  btn.textContent = 'Confirm'; btn.disabled = false;
+  closeRescueModal();
+  renderFeed();
+}
+
+/* ============================================================
+   NEWS RENDERING
+   ============================================================ */
+async function renderNews(){
+  const list = document.getElementById('newsList');
+  list.innerHTML = '<div class="empty-state"><p>Loading stories…</p></div>';
+  const newsIdx = await getPostIndex('news_index');
+  const postIdx = await getPostIndex('post_index');
+
+  const newsItems = (await Promise.all(newsIdx.map(id=>getItem('news:', id))))
+    .filter(Boolean).map(n=>({data:n, kind:'news', time:n.createdAt}));
+  const rescuedItems = (await Promise.all(postIdx.map(id=>getItem('post:', id))))
+    .filter(p=>p && p.status==='rescued').map(p=>({data:p, kind:'rescue', time:p.rescuedAt||p.createdAt}));
+
+  const combined = newsItems.concat(rescuedItems).sort((a,b)=>b.time-a.time);
+
+  if(combined.length === 0){
+    list.innerHTML = emptyStateHTML('https://cataas.com/cat?width=300&height=300','No rescue stories yet','Once a request gets rescued, or an NGO shares an update, it will show up here.');
+    return;
+  }
+  list.innerHTML = combined.map(item => item.kind==='news' ? newsCardHTML(item.data) : autoRescueCardHTML(item.data)).join('');
+}
+
+function newsCardHTML(n){
+  const liked = n.likes.includes(currentUser.username);
+  return '<div class="post-card">'+
+    '<div class="post-head">'+
+      '<div class="avatar">'+initials(n.authorName)+'</div>'+
+      '<div class="who">'+
+        '<div class="name">'+escapeHTML(n.authorName)+' <span class="tag ngo">NGO / rescuer</span></div>'+
+        '<div class="meta">'+timeAgo(n.createdAt)+'</div>'+
+      '</div>'+
+      '<span class="tag status-rescued">'+escapeHTML(n.outcome)+'</span>'+
+    '</div>'+
+    '<img class="post-photo" src="'+n.imageDataUrl+'" alt="'+escapeHTML(n.title)+'" />'+
+    '<div class="post-body">'+
+      '<div class="desc"><b>'+escapeHTML(n.title)+'.</b> '+escapeHTML(n.story)+'</div>'+
+    '</div>'+
+    '<div class="post-actions">'+
+      '<button class="icon-btn '+(liked?'liked':'')+'" onclick="toggleLike(\''+n.id+'\',\'news:\')">'+
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10.4-8.8 10.4S3.2 13.6 3.2 8.6a4.6 4.6 0 0 1 8.8-2 4.6 4.6 0 0 1 8.8 2z"/></svg>'+
+        n.likes.length+
+      '</button>'+
+      deleteBtnHTML('news', n.id)+
+    '</div>'+
+  '</div>';
+}
+
+function autoRescueCardHTML(p){
+  const liked = p.likes.includes(currentUser.username);
+  const heroName = p.helperName || 'A rescuer';
+  return '<div class="post-card">'+
+    '<div class="post-head">'+
+      '<div class="avatar">'+initials(heroName)+'</div>'+
+      '<div class="who">'+
+        '<div class="name">'+escapeHTML(heroName)+' <span class="tag ngo">NGO / rescuer</span></div>'+
+        '<div class="meta">'+timeAgo(p.rescuedAt||p.createdAt)+'</div>'+
+      '</div>'+
+      '<span class="tag status-rescued">Rescued</span>'+
+    '</div>'+
+    '<img class="post-photo" src="'+p.imageDataUrl+'" alt="'+escapeHTML(p.species)+' rescued" />'+
+    '<div class="post-body">'+
+      '<div class="loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.6 7-11.5A7 7 0 0 0 5 9.5C5 14.4 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.3"/></svg>'+escapeHTML(p.location)+'</div>'+
+      '<div class="desc">'+speciesEmoji(p.species)+' <b>'+escapeHTML(p.species)+' rescued.</b> '+escapeHTML(p.description)+' Flagged by '+escapeHTML(p.authorName)+', rescued by '+escapeHTML(heroName)+'.</div>'+
+    '</div>'+
+    '<div class="post-actions">'+
+      '<button class="icon-btn '+(liked?'liked':'')+'" onclick="toggleLike(\''+p.id+'\',\'post:\')">'+
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10.4-8.8 10.4S3.2 13.6 3.2 8.6a4.6 4.6 0 0 1 8.8-2 4.6 4.6 0 0 1 8.8 2z"/></svg>'+
+        p.likes.length+
+      '</button>'+
+      deleteBtnHTML('post', p.id)+
+    '</div>'+
+  '</div>';
+}
+
+/* ============================================================
+   CHAT
+   ============================================================ */
+function pairKey(a,b){ return [a,b].sort().join('__'); }
+
+async function openChat(partnerUsername, partnerName, partnerRole, partnerPhone){
+  currentChatPartner = {username:partnerUsername, name:partnerName, role:partnerRole, phone:partnerPhone};
+  document.getElementById('chatAvatar').textContent = initials(partnerName);
+  document.getElementById('chatPartnerName').textContent = partnerName;
+  document.getElementById('chatPartnerRole').textContent = partnerRole==='ngo' ? 'NGO / rescuer' : 'Animal lover';
+  const callLink = document.getElementById('chatCallLink');
+  if(partnerPhone){ callLink.href = 'tel:'+partnerPhone; callLink.removeAttribute('data-disabled'); }
+  else { callLink.href='javascript:void(0)'; callLink.setAttribute('data-disabled','1'); }
+
+  document.getElementById('chatModal').classList.remove('hidden');
+  await renderChatThread();
+
+  const users = await getUsers();
+  await ensurePartnerIndex(currentUser.username, partnerUsername);
+  await ensurePartnerIndex(partnerUsername, currentUser.username);
+}
+function closeChat(){
+  document.getElementById('chatModal').classList.add('hidden');
+  currentChatPartner = null;
+  renderChatsList();
+}
+async function ensurePartnerIndex(owner, partner){
+  const raw = await sGet('chat_partners:'+owner, true);
+  const list = raw ? JSON.parse(raw) : [];
+  if(!list.includes(partner)){
+    list.unshift(partner);
+    await sSet('chat_partners:'+owner, JSON.stringify(list), true);
+  }
+}
+async function renderChatThread(){
+  if(!currentChatPartner) return;
+  const key = pairKey(currentUser.username, currentChatPartner.username);
+  const raw = await sGet('chat:'+key, true);
+  const messages = raw ? JSON.parse(raw) : [];
+  const box = document.getElementById('chatMessages');
+  if(messages.length===0){
+    box.innerHTML = '<div class="empty-state" style="padding:30px 10px;"><p>Say hello — let them know what you can offer or what you need.</p></div>';
+  } else {
+    box.innerHTML = messages.map(m=>{
+      const mine = m.from === currentUser.username;
+      return '<div class="msg '+(mine?'me':'them')+'">'+escapeHTML(m.text)+'<span class="msg-time">'+timeAgo(m.at)+'</span></div>';
+    }).join('');
+  }
+  box.scrollTop = box.scrollHeight;
+}
+async function sendChatMessage(){
+  if(!currentChatPartner) return;
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if(!text) return;
+  const key = pairKey(currentUser.username, currentChatPartner.username);
+  const raw = await sGet('chat:'+key, true);
+  const messages = raw ? JSON.parse(raw) : [];
+  messages.push({from: currentUser.username, text, at: Date.now()});
+  await sSet('chat:'+key, JSON.stringify(messages), true);
+  await ensurePartnerIndex(currentUser.username, currentChatPartner.username);
+  await ensurePartnerIndex(currentChatPartner.username, currentUser.username);
+  input.value = '';
+  await renderChatThread();
+}
+
+async function renderChatsList(){
+  const list = document.getElementById('chatsList');
+  list.innerHTML = '<div class="empty-state"><p>Loading conversations…</p></div>';
+  const raw = await sGet('chat_partners:'+currentUser.username, true);
+  const partners = raw ? JSON.parse(raw) : [];
+  if(partners.length===0){
+    list.innerHTML = emptyStateHTML('https://placedog.net/300/300?random=15','No conversations yet','Tap "Chat" on a help request or rescue post to start talking directly with someone.');
+    return;
+  }
+  const users = await getUsers();
+  const rows = [];
+  for(const partnerUsername of partners){
+    const u = users[partnerUsername];
+    const name = u ? u.name : partnerUsername;
+    const role = u ? u.role : null;
+    const phone = u ? u.phone : null;
+    const key = pairKey(currentUser.username, partnerUsername);
+    const raw2 = await sGet('chat:'+key, true);
+    const messages = raw2 ? JSON.parse(raw2) : [];
+    const last = messages[messages.length-1];
+    rows.push('<div class="chat-item" onclick=\'openChat('+JSON.stringify(partnerUsername)+','+JSON.stringify(name)+','+JSON.stringify(role)+','+JSON.stringify(phone||null)+')\'>'+
+      '<div class="avatar">'+initials(name)+'</div>'+
+      '<div class="who"><div class="name">'+escapeHTML(name)+'</div><div class="snippet">'+(last?escapeHTML(last.text):'No messages yet')+'</div></div>'+
+      '<div class="time">'+(last?timeAgo(last.at):'')+'</div>'+
+    '</div>');
+  }
+  list.innerHTML = rows.join('');
+}
+
+/* ============================================================
+   DONATION
+   ============================================================ */
+const DONATE_UPI_ID = '8766295309@fam';
+function currentDonateAmount(){
+  const custom = document.getElementById('donateCustom').value;
+  return custom && Number(custom) > 0 ? Number(custom) : Number(getActiveChip('donateChips') || 50);
+}
+function buildUpiLink(amount){
+  return 'upi://pay?pa='+DONATE_UPI_ID+'&pn='+encodeURIComponent("It's All About Animals")+'&am='+amount+'&cu=INR&tn='+encodeURIComponent('Animal rescue donation');
+}
+function updateDonateAmountUI(){
+  const amount = currentDonateAmount();
+  const link = buildUpiLink(amount);
+  const a = document.getElementById('donateLink');
+  if(a) a.href = link;
+  const qr = document.getElementById('donateQr');
+  if(qr) qr.src = 'https://api.qrserver.com/v1/create-qr-code/?size=240x240&data='+encodeURIComponent(link);
+  const cap = document.getElementById('donateQrCaption');
+  if(cap) cap.textContent = 'Scan to pay ₹'+amount+' to 8766295309@fam';
+}
+function onDonateClick(evt){
+  // Refresh the link right before navigating, in case the amount changed.
+  updateDonateAmountUI();
+  spawnDonateHearts();
+  const thanks = document.getElementById('donateThanks');
+  thanks.classList.add('show');
+  setTimeout(()=>thanks.classList.remove('show'), 6000);
+
+  const link = document.getElementById('donateLink').href;
+  // Try a second route in case this page is embedded in a preview frame that
+  // blocks the anchor's own navigation — a fresh window.open sometimes gets through
+  // where a same-frame anchor click doesn't.
+  try{ window.open(link, '_blank'); }catch(e){}
+
+  if(isInIframe()){
+    document.getElementById('donatePreviewNote').classList.remove('hidden');
+    return false; // avoid a second, guaranteed-to-fail navigation attempt in the sandboxed frame
+  }
+  return true; // real page (not embedded) — let the anchor's own click carry the upi:// link
+}
+function isInIframe(){
+  try{ return window.self !== window.top; }catch(e){ return true; }
+}
+function copyDonateNumber(){
+  navigator.clipboard && navigator.clipboard.writeText(DONATE_UPI_ID).catch(()=>{});
+  const btn = document.getElementById('copyNumBtn');
+  const original = btn.textContent;
+  btn.textContent = 'Copied ✓';
+  setTimeout(()=>{ btn.textContent = original; }, 1800);
+}
+function spawnDonateHearts(){
+  const field = document.getElementById('donatePaws');
+  if(!field) return;
+  const symbols = ['💛','🐾','💛','🐶','🐱'];
+  for(let i=0;i<10;i++){
+    const s = document.createElement('span');
+    s.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+    s.style.left = (10+Math.random()*80)+'%';
+    s.style.bottom = '0px';
+    s.style.animationDelay = (i*0.12)+'s';
+    s.style.animationDuration = (2.6+Math.random()*1.4)+'s';
+    field.appendChild(s);
+    setTimeout(()=>s.remove(), 4500);
+  }
+}
+
+/* ============================================================
+   PROFILE RENDERING
+   ============================================================ */
+/* ============================================================
+   RANKS & LEADERBOARD
+   ============================================================ */
+const RANKS = [
+  {min:0,    title:'Newcomer Paw',  icon:'🐾'},
+  {min:50,   title:'Helper Paw',    icon:'🐕'},
+  {min:150,  title:'Guardian Paw',  icon:'🐕‍🦺'},
+  {min:350,  title:'Hero Paw',      icon:'🦸'},
+  {min:700,  title:'Champion Paw',  icon:'🏆'},
+  {min:1500, title:'Legend Paw',    icon:'👑'}
+];
+function getRank(coins){
+  let current = RANKS[0], next = null;
+  for(let i=0;i<RANKS.length;i++){
+    if(coins >= RANKS[i].min){ current = RANKS[i]; next = RANKS[i+1] || null; }
+  }
+  let progress = 100;
+  if(next){ progress = Math.max(0, Math.min(100, Math.round(((coins-current.min)/(next.min-current.min))*100))); }
+  return {title:current.title, icon:current.icon, next, progress};
+}
+function renderRankBadge(){
+  const rank = getRank(currentUser.coins);
+  document.getElementById('rankIcon').textContent = rank.icon;
+  document.getElementById('rankTitle').textContent = rank.title;
+  document.getElementById('rankProgressFill').style.width = rank.progress+'%';
+  document.getElementById('rankNext').textContent = rank.next
+    ? (rank.next.min - currentUser.coins)+' PawCoins to '+rank.next.title
+    : 'Highest rank reached 🎉';
+}
+async function renderLeaderboard(){
+  const list = document.getElementById('leaderboardList');
+  list.innerHTML = '<div class="empty-state"><p>Loading leaderboard…</p></div>';
+  const users = await getUsers();
+  const ranked = Object.values(users)
+    .filter(u => u.coins > 0)
+    .sort((a,b) => b.coins - a.coins);
+
+  if(ranked.length === 0){
+    list.innerHTML = emptyStateHTML('https://placedog.net/300/300?random=23','No PawCoins earned yet','Be the first — post a help request or complete a rescue.');
+    return;
+  }
+  list.innerHTML = ranked.map((u, i)=>{
+    const place = i+1;
+    const medalClass = place===1?'gold':place===2?'silver':place===3?'bronze':'';
+    const rank = getRank(u.coins);
+    const isMe = u.username === currentUser.username;
+    return '<div class="lb-row'+(isMe?' me':'')+'">'+
+      '<div class="lb-rank '+medalClass+'">'+place+'</div>'+
+      '<div class="avatar">'+initials(u.name)+'</div>'+
+      '<div class="lb-who">'+
+        '<div class="lb-name">'+escapeHTML(u.name)+(isMe?' <span class="tag lover">You</span>':'')+' <span class="tag '+(u.role==='ngo'?'ngo':'lover')+'">'+(u.role==='ngo'?'NGO':'Lover')+'</span></div>'+
+        '<div class="lb-title">'+rank.icon+' '+rank.title+'</div>'+
+      '</div>'+
+      '<div class="lb-coins">'+
+        '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" fill="#D9A441" stroke="#B3822C" stroke-width="1"/><path d="M12 7.5c-1.8 0-3 1-3 2.2 0 2.7 4.6 1.7 4.6 4 0 1.2-1.2 2.1-2.9 2.1-1.2 0-2.2-.4-2.7-1.1M12 6.5v1.1M12 16.3v1.1" stroke="#7A5E1E" stroke-width="1.1" stroke-linecap="round"/></svg>'+
+        u.coins+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function renderProfile(){
+  document.getElementById('profileAvatar').textContent = initials(currentUser.name);
+  document.getElementById('profileName').textContent = currentUser.name;
+  document.getElementById('profileRoleLine').textContent = currentUser.role === 'ngo' ? 'NGO / rescuer' : 'Animal lover, rescuing';
+  document.getElementById('profilePhoneLine').textContent = currentUser.phone ? '📞 '+currentUser.phone : '';
+  document.getElementById('profileCoins').textContent = currentUser.coins;
+  updateDonateAmountUI();
+  renderRankBadge();
+
+  const q = QUOTES[Math.floor(Math.random()*QUOTES.length)];
+  document.getElementById('profileQuoteText').textContent = '“'+q.text+'”';
+  document.getElementById('profileQuoteBy').textContent = q.by ? '— '+q.by : '';
+
+  const row = document.getElementById('profileStatRow');
+  if(currentUser.role === 'ngo'){
+    row.innerHTML =
+      '<div class="stat-box"><div class="n">'+currentUser.stats.rescued+'</div><div class="l">Animals rescued</div></div>'+
+      '<div class="stat-box"><div class="n">'+currentUser.coins+'</div><div class="l">PawCoins earned</div></div>';
+  } else {
+    row.innerHTML =
+      '<div class="stat-box"><div class="n">'+currentUser.stats.posted+'</div><div class="l">Requests posted</div></div>'+
+      '<div class="stat-box"><div class="n">'+currentUser.coins+'</div><div class="l">PawCoins earned</div></div>';
+  }
+
+  const hist = document.getElementById('profileHistory');
+  if(!currentUser.coinLog || currentUser.coinLog.length===0){
+    hist.innerHTML = '<p style="font-size:13.5px;color:var(--ink-soft);">Nothing yet — post a request or complete a rescue to start earning PawCoins.</p>';
+  } else {
+    hist.innerHTML = currentUser.coinLog.map(function(h){
+      return '<div class="history-item"><span>'+escapeHTML(h.reason)+'</span><span class="plus">+'+h.amount+'</span></div>';
+    }).join('');
+  }
+}
+</script>
+</body>
+</html>
